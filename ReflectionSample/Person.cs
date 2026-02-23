@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection;
+
 namespace ReflectionSample;
 public class Person : ICloneable
 {
@@ -20,7 +22,38 @@ public class Person : ICloneable
 
         foreach (var item in personType.GetProperties())
         {
-            item.SetValue(clone, item.GetValue(this));
+            var attribute = item.GetCustomAttribute<CloneRuleAttribute>();
+            if (attribute != null)
+            {
+                if (!attribute.DontClone)
+                {
+                    if (item.PropertyType == typeof(string))
+                    {
+                        switch (attribute.Format)
+                        {
+                            case CasingFormat.None:
+                                item.SetValue(clone, item.GetValue(this));
+                                break;
+                            case CasingFormat.UpperCase:
+                                item.SetValue(clone, item.GetValue(this)?.ToString()?.ToUpper());
+                                break;
+                            case CasingFormat.LowerCase:
+                                item.SetValue(clone, item.GetValue(this)?.ToString()?.ToLower());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        item.SetValue(clone, item.GetValue(this));
+                    }
+                }
+            }
+            else
+            {
+                item.SetValue(clone, item.GetValue(this));
+            } 
         }
         return clone;
     }

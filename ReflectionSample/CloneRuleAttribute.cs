@@ -1,4 +1,6 @@
 ﻿namespace ReflectionSample;
+
+[AttributeUsage(AttributeTargets.Property)]
 public class CloneRuleAttribute :Attribute
 {
     public bool DontClone { get; set; }
