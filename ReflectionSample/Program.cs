@@ -1,4 +1,5 @@
 ﻿
+using ReflectionSample.Extensions;
 using SampleInterface;
 using System.Reflection;
 
@@ -21,7 +22,7 @@ namespace ReflectionSample
 
             //// anonyme Methode
             //bool x = person.FirstName.Any(c => c == 'o');
-           
+
             //person.LoggingDelegate += (m => { 
             //    Console.WriteLine($"[LOG] {m}");
             //    Console.WriteLine($"kommt aus der anonymen Funktion");
@@ -31,10 +32,27 @@ namespace ReflectionSample
             //person.LoggingAction = LogClone;
 
             //Person? clonePerson = person.Clone() as Person;
-            
+
             //ReadTypeInfo(person);
 
-            ActionAndFuncSample();
+            //ActionAndFuncSample();
+            ExtensionSamples();
+        }
+
+        private static void ExtensionSamples()
+        {
+            List<int> list = new List<int>();
+            for (int i = 1; i <= 20; i++)
+            {
+                list.Add(i);
+            }
+            
+            Company company = new Company { Name = "Microsoft", Handelsregisterauszug = "HRB 12345" };
+            company.WhatsMyName();
+
+            Console.WriteLine(list.Sum());
+            Console.WriteLine(list.Max());
+            Console.WriteLine(list.Product());
         }
 
         private static void ActionAndFuncSample()

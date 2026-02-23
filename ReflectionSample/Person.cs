@@ -1,10 +1,10 @@
 ﻿namespace ReflectionSample;
-public class Person : CloneableObject
+public class Person : CloneableObject, IName
 {
     [CloneRule(DontClone = true)]
     public int Id { get; set; }
 
-    public string FirstName { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     [CloneRule(Format = CasingFormat.UpperCase)]
     public string LastName { get; set; } = string.Empty;
@@ -15,11 +15,11 @@ public class Person : CloneableObject
 
     public string SayMyName()
     {
-        return $"My name is {FirstName} {LastName}";
+        return $"My name is {Name} {LastName}";
     }
 
     private string SayMyNamePrivate()
     {
-        return $"My name is {FirstName} {LastName} (very private)";
+        return $"My name is {Name} {LastName} (very private)";
     }
 }
