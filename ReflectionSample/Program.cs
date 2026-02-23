@@ -6,21 +6,75 @@ namespace ReflectionSample
 {
     internal class Program
     {
+       
         static void Main(string[] args)
         {
             //LoadExternalAssembly();
 
-            Person person = new Person
-            {
-                Id = 1,
-                FirstName = "John",
-                LastName = "Doe",
-                DateofBirth = new DateOnly(1990, 1, 1)
-            };
+            //Person person = new Person
+            //{
+            //    Id = 1,
+            //    FirstName = "John",
+            //    LastName = "Doe",
+            //    DateofBirth = new DateOnly(1990, 1, 1)
+            //};
 
-            Person? clonePerson = person.Clone() as Person;
+            //// anonyme Methode
+            //bool x = person.FirstName.Any(c => c == 'o');
+           
+            //person.LoggingDelegate += (m => { 
+            //    Console.WriteLine($"[LOG] {m}");
+            //    Console.WriteLine($"kommt aus der anonymen Funktion");
+            //});
+            //person.LoggingDelegate += LogClone;
+
+            //person.LoggingAction = LogClone;
+
+            //Person? clonePerson = person.Clone() as Person;
             
-            ReadTypeInfo(person);
+            //ReadTypeInfo(person);
+
+            ActionAndFuncSample();
+        }
+
+        private static void ActionAndFuncSample()
+        {
+            Func<int, int, double> mathFunction = Add;
+            //Console.WriteLine(mathFunction(5, 10));
+            mathFunction += Multiply;
+            //Console.WriteLine(mathFunction(5, 10));
+            mathFunction += (int a, int b) => a / b;
+            //Console.WriteLine(mathFunction2(15, 0));
+            //double result = mathFunction2(15, 0);
+            foreach (var item in mathFunction.GetInvocationList())
+            {
+                Console.WriteLine(item.DynamicInvoke(5, 10));
+            }
+
+
+            Calculate(Add, 5, 10);
+            Calculate(Multiply, 5, 10);
+            // Console.WriteLine(mathFunction(5,10));
+        }
+
+        private static double Multiply(int arg1, int arg2)
+        {
+            return arg1 * arg2;
+        }
+
+        private static double Add(int arg1, int arg2)
+        {
+            return arg1 + arg2;
+        }
+
+        private static double Calculate(Func<int, int, double> mathFunc, int arg1, int arg2)
+        {
+            return mathFunc(arg1, arg2);
+        }
+
+        private static void LogClone(string message)
+        {
+            Console.WriteLine(message);
         }
 
         private static void ReadTypeInfo(Person person)

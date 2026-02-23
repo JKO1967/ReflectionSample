@@ -1,8 +1,5 @@
-﻿
-using System.Reflection;
-
-namespace ReflectionSample;
-public class Person : ICloneable
+﻿namespace ReflectionSample;
+public class Person : CloneableObject
 {
     [CloneRule(DontClone = true)]
     public int Id { get; set; }
@@ -14,49 +11,7 @@ public class Person : ICloneable
 
     public DateOnly? DateofBirth { get; set; }
 
-    public object Clone()
-    {
-        Type personType = this.GetType();
-
-        Person clone = new Person();
-
-        foreach (var item in personType.GetProperties())
-        {
-            var attribute = item.GetCustomAttribute<CloneRuleAttribute>();
-            if (attribute != null)
-            {
-                if (!attribute.DontClone)
-                {
-                    if (item.PropertyType == typeof(string))
-                    {
-                        switch (attribute.Format)
-                        {
-                            case CasingFormat.None:
-                                item.SetValue(clone, item.GetValue(this));
-                                break;
-                            case CasingFormat.UpperCase:
-                                item.SetValue(clone, item.GetValue(this)?.ToString()?.ToUpper());
-                                break;
-                            case CasingFormat.LowerCase:
-                                item.SetValue(clone, item.GetValue(this)?.ToString()?.ToLower());
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        item.SetValue(clone, item.GetValue(this));
-                    }
-                }
-            }
-            else
-            {
-                item.SetValue(clone, item.GetValue(this));
-            } 
-        }
-        return clone;
-    }
+    
 
     public string SayMyName()
     {
