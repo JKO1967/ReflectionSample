@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieApi.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -6,6 +7,7 @@ using MovieApi.Service;
 namespace MovieApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize(Roles = "Administrator")]
 public class MovieController : ControllerBase
 {
     private readonly ILogger<MovieController> _logger;
@@ -19,6 +21,7 @@ public class MovieController : ControllerBase
 
     // GET: api/<MovieController>
     [HttpGet]
+  //  [AllowAnonymous]
     public IActionResult GetAllMovies()
     {
         _logger.LogInformation("Movie Get wurde aufgerufen");
@@ -48,7 +51,7 @@ public class MovieController : ControllerBase
     }
 
     // POST api/<MovieController>
-    [HttpPost]
+    [HttpPost]   
     public IActionResult Post([FromBody] Movie value)
     {
         var movie = _repository.AddMovie(value);

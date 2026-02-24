@@ -21,6 +21,8 @@
     },
     "https": {
       "commandName": "Project",
+      "windowsAuthentication": true,
+      "anonymousAuthentication":  false,
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",

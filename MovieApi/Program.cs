@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using MovieApi.Service;
 using NLog.Web;
@@ -17,6 +18,11 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme).AddNegotiate();
+
+        builder.Services.AddAuthorization(o =>
+        o.FallbackPolicy = o.DefaultPolicy);
 
         builder.Services.AddScoped<IMovieRepository, EfMovieRepository>();
 
@@ -39,6 +45,7 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        //app.UseAuthentication();
 
 
         app.MapControllers();
