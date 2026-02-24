@@ -1,4 +1,5 @@
 
+using Microsoft.EntityFrameworkCore;
 using MovieApi.Service;
 using NLog.Web;
 
@@ -17,7 +18,12 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddSingleton<IMovieRepository, JsonRepository>();
+        builder.Services.AddScoped<IMovieRepository, EfMovieRepository>();
+
+        builder.Services.AddDbContext<MovieContext>(o =>
+        {
+            o.UseSqlServer("Data Source=(localdb)\\MsSqlLocalDb;Initial Catalog=Movies202602;Integrated Security=true");
+        });
 
         builder.Host.UseNLog();
 

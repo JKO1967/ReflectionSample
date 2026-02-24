@@ -1,47 +1,92 @@
 ﻿
+using System.Text.Json;
+
 namespace MovieApi.Service;
 
 public class JsonRepository : IMovieRepository
 {
+    private const string filename = "movies.json";
+    private readonly List<Movie> movies;
 
+    public JsonRepository()
+    {
+        if (File.Exists(filename))
+        {
+            string json = File.ReadAllText(filename);
+            movies = JsonSerializer.Deserialize<List<Movie>>(json) ?? new List<Movie>();
+        }
+        else
+        {
+            movies = new List<Movie>()
+            {
+                new Movie() { Id=1, Title ="Jurrasic Park", Year =1993 },
+                new Movie() { Id=2, Title ="Jurrasic World", Year =2025 },
+                new Movie() { Id=3, Title ="Inception", Year =2010 },
+                new Movie() { Id=4, Title ="Forrest Gump", Year =1993 },
+                new Movie() { Id=5, Title ="Das Leben des Brian", Year =1979 }
+            };
+        }
+    }
 
     public Movie AddMovie(Movie movie)
     {
-        throw new NotImplementedException();
+        movie.Id = movies.Select(m => m.Id).Max() + 1;
+        movies.Add(movie);
+        Save();
+        return movie;
     }
+
+   
 
     public void DeleteMovie(int id)
     {
-        throw new NotImplementedException();
+        var movie = GetMovieById(id);
+        if (movie != null)
+        {
+            movies.Remove(movie);
+            Save();
+        }
     }
 
     public IEnumerable<Movie> GetAll()
     {
-        throw new NotImplementedException();
+        return movies;
     }
 
     public Movie? GetMovieById(int id)
     {
-        throw new NotImplementedException();
+        return movies.Find(m=>m.Id == id);
     }
 
-    public Movie GetMovieByName(string name)
+    public Movie? GetMovieByName(string name)
     {
-        throw new NotImplementedException();
+        return movies.Find(m=>m.Title.StartsWith(name));
     }
 
     public bool MovieExists(int id)
     {
-        throw new NotImplementedException();
+        return movies.Any(m => m.Id == id);
     }
 
     public bool MovieExists(string title)
     {
-        throw new NotImplementedException();
+        return movies.Any(m => m.Title.StartsWith(title));
     }
 
     public void UpdateMovie(Movie movie)
     {
-        throw new NotImplementedException();
+        var orgMovie = GetMovieById(movie.Id);
+        if (orgMovie != null)
+        {
+            orgMovie.Title = movie.Title;
+            orgMovie.Year = movie.Year;
+            Save();
+        }
+    }
+
+    private void Save()
+    {
+        string json = JsonSerializer.Serialize(movies);
+        File.WriteAllText(filename, json);
     }
 }

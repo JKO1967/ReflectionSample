@@ -6,7 +6,7 @@ public interface IMovieRepository
 
     Movie? GetMovieById(int id);
 
-    Movie GetMovieByName(string name);
+    Movie? GetMovieByName(string name);
 
     bool MovieExists(int id);
 

@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 1,
+    "Title": "Jurrasic Park",
+    "Year": 1993
+  },
+  {
+    "Id": 2,
+    "Title": "Jurrasic World",
+    "Year": 2025
+  },
+  {
+    "Id": 3,
+    "Title": "Inception",
+    "Year": 2010
+  },
+  {
+    "Id": 4,
+    "Title": "Forrest Gump",
+    "Year": 1993
+  },
+  {
+    "Id": 5,
+    "Title": "Das Leben des Brian",
+    "Year": 1979
+  }
+]
