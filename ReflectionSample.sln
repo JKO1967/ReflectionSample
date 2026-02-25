@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAsyncStream", "WpfAsyncStream\WpfAsyncStream.csproj", "{933CB7EA-DD50-4A20-83E5-3B8B4A4723E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonSerialisierungsSample", "JsonSerialisierungsSample\JsonSerialisierungsSample.csproj", "{916BA69D-42BF-4CC3-8981-8149E21D4B85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{933CB7EA-DD50-4A20-83E5-3B8B4A4723E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{933CB7EA-DD50-4A20-83E5-3B8B4A4723E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{933CB7EA-DD50-4A20-83E5-3B8B4A4723E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{916BA69D-42BF-4CC3-8981-8149E21D4B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{916BA69D-42BF-4CC3-8981-8149E21D4B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{916BA69D-42BF-4CC3-8981-8149E21D4B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{916BA69D-42BF-4CC3-8981-8149E21D4B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
