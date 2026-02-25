@@ -29,7 +29,7 @@ internal class Program
         }
 
 
-        Parallel.ForEach(list, d =>
+        Parallel.ForEach(data, d =>
         {
             d.Result = d.Data * 1.19;
         });

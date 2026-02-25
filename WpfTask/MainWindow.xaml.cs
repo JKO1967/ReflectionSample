@@ -25,38 +25,40 @@ public partial class MainWindow : Window
 
     
 
-    private void Button_Click_1(object sender, RoutedEventArgs e)
+    private async void Button_Click_1(object sender, RoutedEventArgs e)
     {
         lbItems.ItemsSource = null;
         lbItems.Items.Clear();
-        
 
 
-        Task<List<string>> t = Task.Run(FillListV2);
-        t.ContinueWith(t =>
-        {
-            lbItems.ItemsSource = t.Result;
-        }, token, TaskContinuationOptions.OnlyOnRanToCompletion, scheduler);
+         await FillListV2();
+        //lbItems.ItemsSource = result;
+        //Task<List<string>> t = Task.Run(FillListV2);
+        //t.ContinueWith(t =>
+        //{
+        //    lbItems.ItemsSource = t.Result;
+        //}, token, TaskContinuationOptions.OnlyOnRanToCompletion, scheduler);
 
-        t.ContinueWith(t =>
-        {
-            lbItems.Items.Add($"Ein Fehler ist aufgetreten: {t.Exception?.Message}");
-        }, token, TaskContinuationOptions.OnlyOnFaulted, scheduler);
+        //t.ContinueWith(t =>
+        //{
+        //    lbItems.Items.Add($"Ein Fehler ist aufgetreten: {t.Exception?.Message}");
+        //}, token, TaskContinuationOptions.OnlyOnFaulted, scheduler);
     }
 
-    private List<string> FillListV2()
+    private async Task FillListV2()
     {
         List<string> list = new List<string>();
         for (int i = 0; i < 10; i++)
         {
             list.Add($"Eintrag {i}");
-            Thread.Sleep(1000);
+            await Task.Delay(1000); ;
         }
-        if (DateTime.Now.Second > 30)
+        if (DateTime.Now.Second > 58)
         {
             throw new InvalidOperationException("Um diese Uhrzeit nicht möglich");
         }
-        return list;
+        lbItems.ItemsSource = list;
+        //return list;
     }
 
     private void FillListV1()
